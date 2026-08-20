@@ -39,16 +39,17 @@ Redeploy after adding the variable.
 
 ## 3. Run locally (optional)
 
-Install the Vercel CLI and run:
+Install dependencies and run the small local server included with the project:
 
 ```bash
-npm i -g vercel
-cp .env.example .env.local
-# Edit .env.local and add your Tumblr consumer key.
-vercel dev
+npm install
+cp .env.example .env.local # optional
+# Edit .env.local and add your Tumblr consumer key:
+# TUMBLR_API_KEY=your_key_here
+npm start
 ```
 
-Then open the local URL printed by Vercel.
+Then open http://localhost:3000
 
 ## How the shuffle works
 

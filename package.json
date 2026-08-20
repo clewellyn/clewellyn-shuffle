@@ -4,7 +4,8 @@
   "private": true,
   "description": "An endless shuffled YouTube player powered by the Clewellyn Tumblr archive.",
   "scripts": {
-    "dev": "vercel dev"
+    "dev": "vercel dev",
+    "start": "node server.js"
   },
   "engines": {
     "node": ">=20"

@@ -1,6 +1,7 @@
 const BLOG = process.env.TUMBLR_BLOG || 'clewellyn.tumblr.com';
 const LIMIT = 20;
-const MAX_PAGES = Number(process.env.TUMBLR_MAX_PAGES || 500);
+// Default to a conservative page scan to avoid Tumblr rate-limits in production.
+const MAX_PAGES = Number(process.env.TUMBLR_MAX_PAGES || 50);
 
 function decodeHtml(value) {
   return String(value)
@@ -99,12 +100,13 @@ export default async function handler(req, res) {
     });
   }
 
-  try {
-    const videos = new Map();
-    const seenPosts = new Set();
-    let before = null;
-    let pages = 0;
+  // Declare state outside try so we can return partial results if Tumblr rate-limits us.
+  let videos = new Map();
+  let seenPosts = new Set();
+  let before = null;
+  let pages = 0;
 
+  try {
     while (pages < MAX_PAGES) {
       const posts = await tumblrPage(apiKey, before);
       pages += 1;
@@ -136,6 +138,19 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error(error);
+
+    // If Tumblr rate-limited us, return partial results instead of failing hard.
+    if (typeof error.message === 'string' && error.message.includes('429')) {
+      res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=86400');
+      return res.status(200).json({
+        blog: BLOG,
+        count: videos.size,
+        pagesScanned: pages,
+        videos: [...videos.values()],
+        warning: 'Partial results: Tumblr rate limit encountered. Try again later for the full archive.',
+      });
+    }
+
     return res.status(502).json({ error: error.message || 'Could not load Tumblr archive.' });
   }
 }
