@@ -1,0 +1,13 @@
+{
+  "name": "clewellyn-shuffle",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An endless shuffled YouTube player powered by the Clewellyn Tumblr archive.",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module"
+}

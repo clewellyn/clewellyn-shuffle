@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0b0c" />
+  <title>Clewellyn Shuffle</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="player-shell" aria-label="Video player">
+      <div id="player"></div>
+      <div id="loading" class="loading" aria-live="polite">Loading the archive…</div>
+    </section>
+
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">NOT A CLEW</p>
+        <h1>CLEWELLYN SHUFFLE</h1>
+      </div>
+      <div id="libraryCount" class="library-count">— videos</div>
+    </header>
+
+    <section class="now-playing" aria-live="polite">
+      <div class="track-copy">
+        <p class="label">NOW PLAYING</p>
+        <h2 id="trackTitle">Ready when you are.</h2>
+      </div>
+      <div class="controls">
+        <button id="nextButton" type="button" class="button secondary" disabled>Next</button>
+        <a id="postLink" class="button ghost disabled" href="https://clewellyn.tumblr.com/archive" target="_blank" rel="noreferrer">Tumblr post</a>
+      </div>
+    </section>
+
+    <div id="startOverlay" class="start-overlay">
+      <div class="start-card">
+        <p class="eyebrow">YOUR MUSIC ARCHIVE, ON SHUFFLE</p>
+        <h2>Press play once.<br />Then let it run.</h2>
+        <p id="startMessage">Loading videos from Tumblr…</p>
+        <button id="startButton" type="button" class="button primary" disabled>▶ Start shuffle</button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
